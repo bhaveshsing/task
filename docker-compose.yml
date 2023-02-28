@@ -1,0 +1,38 @@
+version: "3.2"
+
+services:
+  ts-bp:
+    build:
+      context: .
+      dockerfile: dev/docker/Dockerfile
+    command: npm run watch
+    ports:
+      - "3001:3001"
+    networks:
+      - ts-bp-net
+    volumes:
+      - .:/var/app/task
+      - /var/app/task/node_modules
+    env_file:
+      - .env # it will overwrite .env file content
+    depends_on:
+      - task_postgres
+
+  task_postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - task-net
+    volumes:
+      - "task-postgres-vol:/var/lib/postgres"
+
+networks:
+  task-net:
+    driver: bridge
+volumes:
+  task-postgres-vol:
