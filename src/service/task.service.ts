@@ -70,17 +70,5 @@ export class TaskService {
         return true
     }
 
-  /**
-   * @param  {string} email user's email
-   * @param  {string} password password
-   * @returns Promise<CmsUser>
-   */
-//   public async create(email: string, password: string): Promise<CmsUser> {
-//     const cmsUserRepo = getManager().getCustomRepository(CmsUserRepo);
-//     const salt = await bcrypt.genSalt(constant.SALT_ROUNDS);
-//     const hashedPassword = await bcrypt.hash(password, salt);
-//     return cmsUserRepo.save({ email, password: hashedPassword });
-//   }
-
 
 }
