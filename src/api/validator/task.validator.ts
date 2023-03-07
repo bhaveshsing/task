@@ -54,9 +54,29 @@ const deleteTask = Joi.object().keys({
     }),
 });
 
+const assignTask = Joi.object().keys({
+    id: Joi.string()
+    .uuid({ version: "uuidv4" })
+    .required()
+    .messages({
+      "string.base": "id must be a string",
+      "any.required": "id is required",
+      "string.guid": "invalid id format"
+    }),
+    cmsuser_id: Joi.string()
+    .uuid({ version: "uuidv4" })
+    .required()
+    .messages({
+      "string.base": "id must be a string",
+      "any.required": "id is required",
+      "string.guid": "invalid id format"
+    })
+});
+
 export {
     createTask,
     getTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    assignTask
 }

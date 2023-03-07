@@ -2,6 +2,7 @@ import express from "express";
 import { TaskController } from "@api/controller/task.controller";
 import { HttpRequestValidator } from "@middleware/http-request-validator";
 import {
+    assignTask,
     createTask, deleteTask, getTask, updateTask
 } from "@api/validator/task.validator";
 import { AuthenticateRequest } from "@middleware/authenticate-request";
@@ -45,45 +46,25 @@ class TaskRoute {
             this.httpRequestValidator.validate("params", deleteTask),
             this.taskController.deleteTask
         );
+
+        this.router.post(
+            "/assign",
+            this.httpRequestValidator.validate("body", assignTask),
+            this.taskController.assignTask
+        );
+
+        this.router.get(
+            "/left",
+            // this.httpRequestValidator.validate("body", assignTask),
+            this.taskController.leftJoin
+        );
+
+        this.router.get(
+            "/inner",
+            // this.httpRequestValidator.validate("body", assignTask),
+            this.taskController.innerJoin
+        );
     }
 }
-
-// class BaseRoute {
-//   public router: express.Router = express.Router();
-//   private baseController: BaseController;
-//   private httpRequestValidator: HttpRequestValidator;
-//   private authenticate;
-
-//   constructor() {
-//     this.baseController = new BaseController();
-//     this.httpRequestValidator = new HttpRequestValidator();
-//     const authMiddleware = new AuthenticateRequest();
-//     this.authenticate = authMiddleware.validate;
-//     this.assign();
-//   }
-
-//   private assign() {
-
-//     this.router.post(
-//       "/register",
-//       this.httpRequestValidator.validate("body", register),
-//       this.baseController.register
-//     );
-
-//     this.router.get(
-//         "/user-email-verification/:uniqueKey",
-//         // this.httpRequestValidator.validate("query", verifyOtp),
-//         this.baseController.verifyUserEmail
-//       );
-
-//     this.router.post(
-//       "/login",
-//       this.authenticate,
-//       this.httpRequestValidator.validate("body", login),
-//       this.baseController.login
-//     );
-//     this.router.get("/", this.baseController.defaultCheck);
-//   }
-// }
 
 export default new TaskRoute().router;

@@ -70,5 +70,44 @@ export class TaskService {
         return true
     }
 
+    /**
+    * @param  {string} id task's id
+    * @returns Promise<BasicTaskResponse>
+    */
+    public async assignTask(id: string, cmsuser_id: string): Promise<any> {
+        const taskRepo = getManager().getCustomRepository(TaskRepo);
+        let task = await taskRepo.findOne({ id: id });
+        if(!task){
+            throw new createError.NotFound(i18n.__("invalid_id"));
+        }
+        const assign = taskRepo.update({ id: id },{cmsuser_id: cmsuser_id});
+        console.log(assign);
+        return true
+    }
 
+    /**
+    * @param  {string} id task's id
+    * @returns Promise<BasicTaskResponse>
+    */
+    public async leftJoin(): Promise<any> {
+        const taskRepo = getManager().getCustomRepository(TaskRepo);
+        let task = await taskRepo.createQueryBuilder('tasks').leftJoin('tasks.cmsuser','cmsuser').select(['tasks.id','cmsuser.email']).getMany();
+        if(!task){
+            throw new createError.NotFound(i18n.__("invalid_id"));
+        }
+        return task
+    }
+
+    /**
+    * @param  {string} id task's id
+    * @returns Promise<BasicTaskResponse>
+    */
+    public async innerJoin(): Promise<any> {
+        const taskRepo = getManager().getCustomRepository(TaskRepo);
+        let task = await taskRepo.createQueryBuilder('tasks').innerJoinAndSelect('tasks.cmsuser','cmsuser').addSelect(['tasks.cmsuser.id']).getMany();
+        if(!task){
+            throw new createError.NotFound(i18n.__("invalid_id"));
+        }
+        return task
+    }
 }

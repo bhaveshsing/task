@@ -84,4 +84,56 @@ export class TaskController {
             .setMessage(i18n.__("SUCCESS"))
             .send(res);
     }
+
+    /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @returns boolean
+   */
+    public assignTask = async (req: Request, res: Response): Promise<void> => {
+        const {
+            body: { id, cmsuser_id },
+        } = req;
+        const response = await this.taskService.assignTask(id, cmsuser_id);
+        this.responseParser
+            .setStatus(true)
+            .setHttpCode(constant.HTTP_STATUS_OK)
+            .setBody(response)
+            .setMessage(i18n.__("SUCCESS"))
+            .send(res);
+    }
+
+    /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @returns void
+   */
+    public leftJoin = async (req: Request, res: Response): Promise<void> => {
+        
+        const response = await this.taskService.leftJoin();
+        this.responseParser
+            .setStatus(true)
+            .setHttpCode(constant.HTTP_STATUS_OK)
+            .setBody(response)
+            .setMessage(i18n.__("SUCCESS"))
+            .send(res);
+    }
+    
+    /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @returns void
+   */
+    public innerJoin = async (req: Request, res: Response): Promise<void> => {
+        const {
+            body: { id, cmsuser_id },
+        } = req;
+        const response = await this.taskService.innerJoin();
+        this.responseParser
+            .setStatus(true)
+            .setHttpCode(constant.HTTP_STATUS_OK)
+            .setBody(response)
+            .setMessage(i18n.__("SUCCESS"))
+            .send(res);
+    }
 }

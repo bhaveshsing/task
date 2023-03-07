@@ -3,8 +3,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  JoinColumn,
+  ManyToOne
 } from "typeorm";
+
+import { CmsUser } from './cms-user.model'
 
 @Entity("tasks")
 export class Task {
@@ -32,4 +36,11 @@ export class Task {
     select: false
   })
   public updatedAt: Date;
+
+  @Column()
+  public cmsuser_id: string;
+
+  @ManyToOne((type) => CmsUser, cmsuser => cmsuser.task)
+  @JoinColumn({referencedColumnName: 'id', name: "cmsuser_id" })
+  public cmsuser: CmsUser;
 }

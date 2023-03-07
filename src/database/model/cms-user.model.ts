@@ -1,10 +1,14 @@
+import { Tasks } from "aws-sdk/clients/ecs";
 import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from "typeorm";
+
+import { Task } from './task.model'
 
 @Entity("cms_users")
 export class CmsUser {
@@ -26,4 +30,7 @@ export class CmsUser {
     select: false,
   })
   public updatedAt: Date;
+
+  @OneToMany(type => Task, task => task.cmsuser, { cascade: true })
+  task: Task
 }
