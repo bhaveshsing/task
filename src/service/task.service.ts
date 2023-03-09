@@ -132,7 +132,8 @@ export class TaskService {
     */
     public async eagerExample(): Promise<any> {
         const cmsUserRepo = getManager().getCustomRepository(CmsUserRepo);
-        const user = await cmsUserRepo.findOne();
+        // const user = await cmsUserRepo.findOne();// get all 
+        const user = await cmsUserRepo.findOne({ relations: ['userDetail'] });
         if(!user){
             throw new createError.NotFound(i18n.__("invalid_id"));
         }
