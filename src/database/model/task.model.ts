@@ -40,7 +40,7 @@ export class Task {
   @Column()
   public cmsuser_id: string;
 
-  @ManyToOne((type) => CmsUser, cmsuser => cmsuser.task)
-  @JoinColumn({referencedColumnName: 'id', name: "cmsuser_id" })
+  @ManyToOne((type) => CmsUser, cmsuser => cmsuser.task )
+  // @JoinColumn({referencedColumnName: 'id', name: "cmsuser_id" })
   public cmsuser: CmsUser;
 }

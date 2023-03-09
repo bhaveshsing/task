@@ -136,4 +136,40 @@ export class TaskController {
             .setMessage(i18n.__("SUCCESS"))
             .send(res);
     }
+
+    /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @returns void
+   */
+    public lazyExample = async (req: Request, res: Response): Promise<void> => {
+        const {
+            body: { id, cmsuser_id },
+        } = req;
+        const response = await this.taskService.lazyExample();
+        this.responseParser
+            .setStatus(true)
+            .setHttpCode(constant.HTTP_STATUS_OK)
+            .setBody(response)
+            .setMessage(i18n.__("SUCCESS"))
+            .send(res);
+    }
+
+    /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @returns void
+   */
+    public eagerExample = async (req: Request, res: Response): Promise<void> => {
+        const {
+            body: { id, cmsuser_id },
+        } = req;
+        const response = await this.taskService.eagerExample();
+        this.responseParser
+            .setStatus(true)
+            .setHttpCode(constant.HTTP_STATUS_OK)
+            .setBody(response)
+            .setMessage(i18n.__("SUCCESS"))
+            .send(res);
+    }
 }

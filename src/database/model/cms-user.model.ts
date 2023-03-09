@@ -1,4 +1,3 @@
-import { Tasks } from "aws-sdk/clients/ecs";
 import {
   Column,
   Entity,
@@ -6,9 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  OneToOne,
 } from "typeorm";
 
-import { Task } from './task.model'
+import { Task } from './task.model';
+import { UserDetails } from './user-deatil.model';
 
 @Entity("cms_users")
 export class CmsUser {
@@ -31,6 +32,9 @@ export class CmsUser {
   })
   public updatedAt: Date;
 
-  @OneToMany(type => Task, task => task.cmsuser, { cascade: true })
-  task: Task
+  @OneToMany(type => Task, task => task.cmsuser , {lazy: true, cascade: true})
+  task: Promise<Task[]>
+
+  @OneToOne(type => Task, task => task.cmsuser , {eager: true, cascade: true})
+  userDetail: UserDetails
 }

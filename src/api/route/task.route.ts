@@ -64,6 +64,18 @@ class TaskRoute {
             // this.httpRequestValidator.validate("body", assignTask),
             this.taskController.innerJoin
         );
+
+        this.router.get(
+            "/lazy",
+            // this.httpRequestValidator.validate("body", assignTask),
+            this.taskController.lazyExample
+        );
+
+        this.router.get(
+            "/eager",
+            // this.httpRequestValidator.validate("body", assignTask),
+            this.taskController.eagerExample
+        );
     }
 }
 

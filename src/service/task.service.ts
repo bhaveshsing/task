@@ -2,6 +2,7 @@ import { getManager } from "typeorm";
 import * as jwt from "jsonwebtoken";
 import createError from "http-errors";
 import { TaskRepo } from "@database/repository/task.repository";
+import { CmsUserRepo } from "@database/repository/cms-user.repository";
 import constant from "@config/constant";
 import { BasicTaskResponse } from "@type/task";
 import { JWT_SECRET } from "@config/secret";
@@ -109,5 +110,32 @@ export class TaskService {
             throw new createError.NotFound(i18n.__("invalid_id"));
         }
         return task
+    }
+
+    /**
+    * @param  {string} id task's id
+    * @returns Promise<BasicTaskResponse>
+    */
+    public async lazyExample(): Promise<any> {
+        const cmsUserRepo = getManager().getCustomRepository(CmsUserRepo);
+        const user = await cmsUserRepo.findOne();
+        const task = await user.task;
+        if(!user){
+            throw new createError.NotFound(i18n.__("invalid_id"));
+        }
+        return { user, task }
+    }
+
+    /**
+    * @param  {string} id task's id
+    * @returns Promise<BasicTaskResponse>
+    */
+    public async eagerExample(): Promise<any> {
+        const cmsUserRepo = getManager().getCustomRepository(CmsUserRepo);
+        const user = await cmsUserRepo.findOne();
+        if(!user){
+            throw new createError.NotFound(i18n.__("invalid_id"));
+        }
+        return user;
     }
 }
