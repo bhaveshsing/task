@@ -5,6 +5,7 @@ import { AuthenticateRequest } from "@middleware/authenticate-request";
 import BaseRoute from "./base.route";
 import CmsRoute from "./cms.route";
 import TaskRoute from "./task.route";
+import AwsRoute from "./aws.route";
 export class Routes {
   private authenticate;
   constructor() {
@@ -15,6 +16,7 @@ export class Routes {
     // resource and routes mapping comes here
     app.use("/cms", CmsRoute);
     app.use(BaseRoute);
-    app.use('/task', TaskRoute)
+    app.use('/task', TaskRoute);
+    app.use('/aws', AwsRoute);
   }
 }
